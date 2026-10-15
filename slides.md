@@ -372,10 +372,10 @@ layout: default
 <div class="p-5 bg-emerald-50 dark:bg-emerald-950 border border-emerald-500 rounded-xl space-y-3">
   <div class="font-bold text-emerald-600 text-lg">À retenir pour les équipes d'ingénierie :</div>
   <ul class="text-sm space-y-2">
-    <li>🔹 <b>Abandonner le Vibe Coding :</b> Structurer les requêtes via le <i>Specification-Driven Development</i> (Spec-Kit) pour garantir la maintenabilité.</li>
-    <li>🔹 <b>L'Agent est un opérateur, pas un architecte :</b> Le développeur cadre l'intention, l'agent exécute les tâches unitaires et soumet des patchs vérifiables.</li>
-    <li>🔹 <b>Le test unitaire est le contrat absolu :</b> La seule façon de faire confiance à un agent est de lui imposer une suite de tests rigoureuse (SWE-bench method).</li>
-    <li>🔹 <b>Intégration CI/CD :</b> Le futur de l'agentique logicielle réside dans la maintenance continue automatisée supervisée par des humains.</li>
+    <li><b>Abandonner le Vibe Coding :</b> Structurer les requêtes via le <i>Specification-Driven Development</i> (Spec-Kit) pour garantir la maintenabilité.</li>
+    <li><b>L'Agent est un opérateur, pas un architecte :</b> Le développeur cadre l'intention, l'agent exécute les tâches unitaires et soumet des patchs vérifiables.</li>
+    <li><b>Le test unitaire est le contrat absolu :</b> La seule façon de faire confiance à un agent est de lui imposer une suite de tests rigoureuse (SWE-bench method).</li>
+    <li><b>Intégration CI/CD :</b> Le futur de l'agentique logicielle réside dans la maintenance continue automatisée supervisée par des humains.</li>
   </ul>
 </div>
 
