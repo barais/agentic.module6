@@ -1,7 +1,13 @@
-### MODULE 4 — Les 4 patrons de conception agentiques
-> Le cœur technique, inspiré des patterns d'Andrew Ng.
 
-1. **Patron Réflexion** — l'agent critique et améliore sa propre production ; l'auto-évaluation ; feedback externe (humain, exécution de code)
-2. **Patron Usage d'outils** — le LLM décide quelles fonctions appeler ; function calling ; exemples (recherche, calendrier, email, code)
-3. **Patron Planification** — décomposition d'une tâche complexe en sous-tâches ; planification flexible et adaptative ; plan as JSON ou code généré
-4. **Patron Multi-agents** — collaboration d'agents spécialisés ; orchestrateur / orchestration vs chorégraphie ; avantages et coûts
+### MODULE 6 — Agents pour le développement logiciel
+
+> Usage concret #1, très demandé.
+
+1. **Génération de code par agents** — de Copilot aux agents autonomes de coding (Claude Code, OpenCode, Codex)
+2. **Specification Driven Development** - Démo avec [spec-kit](https://github.com/github/spec-kit)
+3. **Résolution de bugs et SWE-bench** — agents qui corrigent de vrais tickets GitHub
+4. **Code review et refactoring automatisés** — critique, amélioration de la qualité, sécurité du code
+5. **Tests générés par agents** — écriture de tests unitaires, tests de régression
+6. **Documentation et onboarding** — génération de doc, explication de codebase
+7. **CI/CD et pipelines agentiques** — agents dans le cycle de développement, PR automatisées
+8. **Bonnes pratiques et limites** — quand déléguer au code, garde-fous, coûts
