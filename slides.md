@@ -95,37 +95,34 @@ Le *Vibe Coding* (prompter et prier) échoue sur les gros projets. Le **SDD** r�
     « For decades, code was king. SDD inverts this power structure: specifications don't serve code, code serves specifications. »
   </p>
   <div class="pt-2 text-[11px] text-gray-500">
-    En cadrant l'espace de décision avant l'implémentation, on supprime 90% des hallucinations d'architecture.
+    <i>— Équipe GitHub, annonce Spec-Kit (sept. 2025).</i><br/>
+    Le SDD ne supprime pas l'erreur : il la <b>déplace</b> du code vers la spec — où elle devient détectable et corrigible <u>avant</u> d'écrire une ligne de production.
   </div>
 </div>
 </div>
 
----
-layout: default
----
-
-# 3. GitHub Spec-Kit : Un exemple de Framework orienté SDD
-
-Toolkit open source (Microsoft/GitHub) standardisant le SDD pour Claude Code, Copilot et Cursor.
-
 <div class="mt-2 flex justify-center [&>svg]:max-w-4xl">
 
-```mermaid {scale: 0.8}
+```mermaid {scale: 0.72}
 flowchart LR
     C["🏛️ <b>Constitution</b><br/>Invariants & Règles"] --> S["📋 <b>Specify</b><br/>Spec.md (Quoi & Pourquoi)"]
     S --> P["🗺️ <b>Plan</b><br/>Plan.md (Archi technique)"]
     P --> T["✅ <b>Tasks</b><br/>Tasks.md (Tâches unitaires)"]
     T --> I["💻 <b>Implement</b><br/>Code & Tests réels"]
+    I --> V["🔍 <b>Converge</b><br/>Audit spec ↔ code"]
+    V --> I
+    V --> D["✅ Livrable vérifié"]
 
     style C fill:#f1f5f9,stroke:#64748b,color:#000
     style S fill:#ccfbf1,stroke:#0d9488,color:#000
     style P fill:#e0e7ff,stroke:#4f46e5,color:#000
     style T fill:#fef3c7,stroke:#d97706,color:#000
     style I fill:#dcfce7,stroke:#16a34a,color:#000
+    style V fill:#fce7f3,stroke:#db2777,color:#000
+    style D fill:#ecfccb,stroke:#65a30d,color:#000
 ```
 
 </div>
-
 <div class="grid grid-cols-4 gap-3 mt-4 text-xs">
   <div class="p-2 border rounded bg-gray-50 dark:bg-gray-800">
     <b>1. Constitution :</b> Stack imposée, règles de sécurité, conventions de nommage, bibliothèques interdites.
@@ -141,13 +138,24 @@ flowchart LR
   </div>
 </div>
 
+<div class="mt-3 p-2 bg-pink-50 dark:bg-pink-950 border border-pink-400 rounded text-xs">
+  <b>5. Converge (vérification) :</b> étape clé qui ferme la boucle — l'agent audite l'implémentation contre la spec & la constitution, et corrige ou boucle tant que la conformité n'est pas démontrée. C'est ce qui différencie le SDD du simple itératif "prompt → code".
+</div>
+
+<style>
+li {
+  font-size: 0.85em;
+}
+
+</style>
+
 ---
 layout: default
 ---
 
-# Démo Pratique Spec-Kit : Le cycle de vie en CLI
+# 3. Démo Pratique Spec-Kit : Le cycle de vie en CLI
 
-Comment le développeur pilote l'agent à travers des contrats d'artefacts[[7](https://www.google.com/url?sa=E&q=https%3A%2F%2Fvertexaisearch.cloud.google.com%2Fgrounding-api-redirect%2FAUZIYQE2LvzX9TgCeE35GdwYWCgnRx16ZfjuEwJfDH6yThVvP_xVmIQ6zfdM5gwwJAH_g8c92_upHHH8RksO-rsuqI_cE6eYo98-9E0d5iP4-1L-B8PdjZ7wNPOaR3Ixd7VbEcWDKpMaqoDGPzYC3TjJKnUhN2QRRlcHO9QcnaomBw%3D%3D)] :
+Comment le développeur pilote l'agent à travers des contrats d'artefacts — [doc officielle Spec-Kit](https://github.com/github/spec-kit) :
 
 ```bash
 # 1. Initialisation du projet et injection des règles non-négociables
@@ -155,18 +163,21 @@ $ uvx --from git+https://github.com/github/spec-kit.git specify init MonProjet
 ```
 
 <div class="mt-3 p-3 bg-gray-900 text-gray-100 rounded-lg font-mono text-[11px] leading-relaxed">
-  <div class="text-gray-400">// Dans l'agent CLI (Claude Code, Gemini CLI, Cursor) :</div>
-  <div class="text-emerald-400">/speckit-constitution</div>
+  <div class="text-gray-400">// Dans l'agent CLI (Claude Code, Gemini CLI, Cursor) — syntaxe /speckit.&lt;commande&gt;</div>
+  <div class="text-emerald-400">/speckit.constitution</div>
   <div class="text-gray-300">"Stack : Python 3.12, FastAPI, SQLAlchemy async, interdiction de toucher au schéma auth sans review."</div>
 
-  <div class="text-emerald-400 mt-2">/speckit-specify "Ajouter un rate-limiter par IP sur l'endpoint /api/v1/search"</div>
+  <div class="text-emerald-400 mt-2">/speckit.specify "Ajouter un rate-limiter par IP sur l'endpoint /api/v1/search"</div>
   <div class="text-gray-300">-> Génère .specify/spec.md avec gestion des en-têtes Retry-After et cas limites Redis indisponible.</div>
 
-  <div class="text-emerald-400 mt-2">/speckit-plan && /speckit-tasks</div>
+  <div class="text-emerald-400 mt-2">/speckit.plan && /speckit.tasks</div>
   <div class="text-gray-300">-> Génère le plan d'architecture puis le découpage en 4 tâches unitaires dans tasks.md.</div>
 
-  <div class="text-emerald-400 mt-2">/speckit-implement</div>
+  <div class="text-emerald-400 mt-2">/speckit.implement</div>
   <div class="text-gray-300">-> L'agent prend la tâche 1, écrit le test unitaire, écrit le middleware, fait passer pytest, coche la tâche.</div>
+
+  <div class="text-emerald-400 mt-2">/speckit.converge</div>
+  <div class="text-gray-300">-> Audit de conformité : vérifie que le code respecte spec.md & constitution.md ; corrige ou boucle si écart détecté.</div>
 </div>
 
 ---
@@ -195,15 +206,26 @@ Résoudre un vrai bug logiciel ne consiste pas à inventer du code, mais à **na
 <div>
 
 ### Le juge de paix : SWE-bench
-- **Corpus :** 2 294 problèmes logiciels réels extraits de dépôts GitHub open-source célèbres (Django, SymPy, scikit-learn).
+- **Corpus :** 2 294 issues réelles de dépôts open-source (Django, SymPy, scikit-learn).
+- **SWE-bench Verified :** sous-ensemble de **500 issues validées par des mainteneurs humains**, utilisé dans les classements officiels.
 - **Entrée de l'agent :** Le dépôt git + le texte exact de l'Issue GitHub.
-- **Critère de succès :** Le patch généré par l'agent fait passer les tests cachés créés par les mainteneurs du projet.
-- **Progression fulgurante :**
-  - Fin 2023 : ~4% de résolution
-  - 2025-2026 : >50% à 75% avec les modèles de raisonnement récents.
+- **Critère de succès :** Le patch généré fait passer les **tests cachés** (ceux que les mainteneurs ont ajoutés dans leur PR de correction).
+- **Progression (sur Verified) :**
+  - Fin 2023 : ~2-5% (modèles bruts)
+  - 2025 : ~50-70%
+  - 2026 : **>95%** pour les modèles de pointe (Claude Opus 5, GPT-5.x)
+- ⚠️ **Le grain de sel du chercheur :**
+  - Sur **SWE-bench Pro** (issues hors des cycles d'entraînement, 2025), les meilleurs modèles retombent à **~23-30%**.
+  - Morale : SWE-bench est un **signal**, pas une garantie sur vos codebases privées — et il mesure la correction d'issues *déjà identifiées*, pas le diagnostic de bugs inconnus.
 
 </div>
 </div>
+
+<style>
+h3 {
+  font-size: 1.5em;
+}
+</style>
 
 ---
 layout: default
@@ -251,6 +273,7 @@ Un linter (`eslint`, `ruff`) vérifie la syntaxe. L'agent comprend la sémantiqu
 - **Détection des failles OWASP :** Injections SQL cachées, failles de désérialisation, secrets commis par erreur.
 - **Invariants d'architecture :** Détecter une violation de couche (*ex: un contrôleur web qui importe directement le driver SQL*).
 - **Détection de code mort ou dupliqué :** Suggérer une factorisation élégante.
+- ⚠️ **Fiable en revue d'architecture & style ; complémentaire (pas remplaçant) d'un SAST** (Semgrep/CodeQL) pour la sécurité bas niveau, l'agent hallucine encore des vulnérabilités.
 
 ::right::
 <div class="ml-4 p-3 bg-gray-900 text-gray-100 rounded font-mono text-[11px] leading-relaxed">
@@ -261,6 +284,12 @@ Un linter (`eslint`, `ruff`) vérifie la syntaxe. L'agent comprend la sémantiqu
   <b>Risque :</b> En cas de lenteur chez Stripe, le verrou SQL sera maintenu et saturera le pool de connexions.<br/><br/>
   <b>Correction proposée :</b> Sortir l'appel Stripe avant le bloc <code class="text-red">async with db.transaction():</code>."
 </div>
+
+<style>
+li {
+  font-size: 0.85em;
+}
+</style>
 
 ---
 layout: default
@@ -312,7 +341,7 @@ flowchart LR
     C --> D["Analyse du log d'erreur"]
     D --> E["Création d'un patch correctif"]
     E --> F["Re-jeu de la CI"]
-    F -- "✅ Succès" --> G["PR automatique ou Merge"]
+    F -- "✅ Succès" --> G["📬 PR auto (feature)<br/>Revue humaine avant merge main"]
 
     style A fill:#f1f5f9,stroke:#64748b,color:#000
     style B fill:#fee2e2,stroke:#ef4444,color:#000
@@ -324,7 +353,7 @@ flowchart LR
 
 <div class="grid grid-cols-3 gap-3 mt-4 text-xs">
   <div class="p-2 border rounded bg-gray-50 dark:bg-gray-800">
-    <b>Self-Healing CI :</b> Si une dépendance casse le build à cause d'un changement de typage, l'agent crée la PR corrective dans les 2 minutes.
+    <b>Self-Healing CI :</b> Si une dépendance casse le build (ex: changement de typage), l'agent crée la PR corrective dans les 2 minutes — <u>sans jamais merge lui-même</u> : l'équipe valide avant toute mise en production (cf. slide suivante).
   </div>
   <div class="p-2 border rounded bg-gray-50 dark:bg-gray-800">
     <b>Migration de versions :</b> Mise à niveau automatique d'un framework (ex: Java 17 ➔ Java 21) avec réécriture syntaxique des dépréciations.
