@@ -37,6 +37,14 @@ duration: 35min
 layout: default
 ---
 
+# Le risque de perdre le contrôle sur le développement logiciel
+
+![](/img/img1.png)
+
+---
+layout: default
+---
+
 # 1. Du Copilote à l'Agent Autonome
 
 Une rupture de paradigme dans la façon d'interagir avec la base de code :
