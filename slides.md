@@ -425,4 +425,7 @@ class: text-center
 # Fin du Module 6
 ### Place aux démonstrations live (Spec-Kit & Claude Code) !
 
+En route vers [Agents pour la recherche 🚀](https://olivier.barais.fr/agentic.module7/)
+
+
 [GitHub Spec-Kit](https://github.com/github/spec-kit) · [SWE-bench Benchmark](https://www.swebench.com)
